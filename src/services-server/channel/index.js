@@ -35,7 +35,7 @@ class Channel {
     this.socket.on(this.cxt.eventKeys.client.closeConn, function () {
       console.log(self.id + '--关闭连接')
       self.cxt.remove(self)
-    })
+    }) /** 关闭连接 */
     this.sendUsers()
   }
   notifyMsg (msg) {
@@ -43,6 +43,7 @@ class Channel {
     this.socket.to('roomId' + this.roomInfo.id).emit(this.cxt.eventKeys.emit.notifyMsg, msg)
   }
   sendUsers () {
+    // 刷新用户列表
     this.socket.emit(this.cxt.eventKeys.emit.refUsers, this.cxt.users)
     this.socket.to('roomId' + this.roomInfo.id).emit(this.cxt.eventKeys.emit.refUsers, this.cxt.users)
   }
