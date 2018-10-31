@@ -1,3 +1,4 @@
+// 聊天室服务端上下文类，用户、房间、消息、管道等类在此中做集中管理
 let Channel = require('./channel')
 let User = require('./user')
 let eventKeys = require('../services-uitls/event.keys')
@@ -13,6 +14,7 @@ class Context {
   }
   // 创建管道
   createChannel (id, socket) {
+    // 创建一个管道实例，然后初始化管道实例，并将管道添加到管道数组中
     let channel = new Channel(id, socket, this)
     channel.init()
     channel.index = this.channels.length

@@ -1,5 +1,5 @@
 /* @flow */
-
+// 包含房间和房间集合的实现
 let Info = require('./model')
 
 class RoomCollection {

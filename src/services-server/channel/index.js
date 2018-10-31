@@ -1,4 +1,4 @@
-// 管道class
+// 服务端与客户端通讯的管道类
 // 服务端
 class Channel {
   constructor (id, socket, cxt) {
@@ -17,11 +17,14 @@ class Channel {
     this.socket.emit(this.cxt.eventKeys.emit.newUser, user)
     this.socket.to('roomId' + this.roomInfo.id).emit(this.cxt.eventKeys.emit.newUser, user)
   }
+  // 监听三个事件：用户注册、新消息、关闭连接。此处都要逻辑处理，可以参考源码。
   init () {
     let self = this
     let roomInfo = this.cxt.room.collections[0]
     this.roomInfo = roomInfo
+    // 将通讯socket添加一个到房间中，方便后期好广播消息
     this.socket.join('roomId' + roomInfo.id)
+    // 向当前连接上来的socket发送房间信息，设定为第一个房间
     this.socket.emit(this.cxt.eventKeys.emit.sendRooms, roomInfo) /* send出去一个默认的房间 */
     this.socket.on(this.cxt.eventKeys.client.registerUser, function (id, name) {
       console.log(id + '-' + name + '--' + self.id)
